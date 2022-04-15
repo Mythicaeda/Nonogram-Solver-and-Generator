@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -212,6 +212,10 @@ namespace NonogramSolverGenerator
                 int sum = s.Split(' ').Select(n => int.Parse(n)).Sum();
                 totalRowSum += sum;
 
+                //set these before we add in gaps
+                if (sum == 0) { rowClue0 = true; }
+                else if (sum == colLength) { rowClueMax = true; }
+
                 //add in the gap of at least one
                 sum += s.Split(' ').Length - 1;
                 //check if we've violated the col length
@@ -231,6 +235,10 @@ namespace NonogramSolverGenerator
                 //get the sum of the string
                 int sum = s.Split(' ').Select(n => int.Parse(n)).Sum();
                 totalColSum += sum;
+
+                //set these before we add in gaps
+                if(sum == 0) { colClue0 = true; }
+                else if (sum == rowLength) { colClueMax = true; }
 
                 //add in the gap of at least one
                 sum += s.Split(' ').Length - 1;
@@ -257,8 +265,6 @@ namespace NonogramSolverGenerator
                 MessageBox.Show("Total sum of Row Clues does not equal total sum of Column Clues.", "Invalid Puzzle", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-
-
             return true;
         }
 
