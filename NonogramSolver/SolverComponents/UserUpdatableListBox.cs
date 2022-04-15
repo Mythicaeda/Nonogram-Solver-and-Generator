@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -101,10 +101,18 @@ namespace NonogramSolverGenerator.SolverComponents
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            listBox.Items.Add(tbNewEntry.Text.Trim());
-            tbNewEntry.Text = "";
-            //we have at least one item now
-            if (!btnRemoveAll.Enabled) btnRemoveAll.Enabled = true;
+            if (listBox.Items.Count < 1000)
+            {
+                listBox.Items.Add(tbNewEntry.Text.Trim());
+                tbNewEntry.Text = "";
+                //we have at least one item now
+                if (!btnRemoveAll.Enabled) btnRemoveAll.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("Too many items in List.", "Can't Add Item", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                tbNewEntry.Text = "";
+            }
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
