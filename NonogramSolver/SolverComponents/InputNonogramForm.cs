@@ -1,19 +1,18 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NonogramSolverGenerator
 {
+    
+
     public partial class InputNonogramForm : Form
     {
         private Form parent;
         private bool backButton = false;
+        private ProgressBarForm pgf;
 
         public InputNonogramForm(Form parent)
         {
@@ -22,6 +21,8 @@ namespace NonogramSolverGenerator
             MinimumSize = Size;
             openNonDialog.Filter = "Nonogram Files (*.NONOGRAM) | *.NONOGRAM";
             openNonDialog.Multiselect = false;
+
+            pgf = new ProgressBarForm(bwSolver, "Solving Nonogram...");
         }
 
         private void BtnBack_Click(object sender, EventArgs e)
@@ -37,21 +38,28 @@ namespace NonogramSolverGenerator
             {
                 parent.Close();
             }
+            bwSolver.CancelAsync();
         }
 
-        private void btnNext_Click(object sender, EventArgs e)
+        private void BtnNext_Click(object sender, EventArgs e)
         {
+            //validate, then start
             if (ValidatePuzzle())
             {
-                //DO THE SOLVING HERE. Well not literally, bump it into a background worker and pop up a progressbar
-                //ALSO VALIDATE FIRST
-                //temp code
-                new DisplayNonogramForm(this, new bool[1, 1]).Show();
-
+                if(pgf.IsDisposed)
+                {
+                    pgf = new ProgressBarForm(bwSolver, "Solving Nonogram...");
+                }
+                
+                if (!bwSolver.IsBusy)
+                {
+                    bwSolver.RunWorkerAsync();
+                    pgf.ShowDialog();
+                }             
             }        
         }
 
-        private void btnUpload_Click(object sender, EventArgs e)
+        private void BtnUpload_Click(object sender, EventArgs e)
         {
             if (openNonDialog.ShowDialog() == DialogResult.OK)
             {
@@ -62,6 +70,10 @@ namespace NonogramSolverGenerator
                     openNonDialog.FileName = string.Empty;
                     return;
                 }
+                //clear the uulbs
+                ulbRows.ListBox.Items.Clear();
+                ulbCols.ListBox.Items.Clear();
+
                 //read and parse the file
                 int rowCount = 0;
                 int colCount = 0;
@@ -269,7 +281,41 @@ namespace NonogramSolverGenerator
         }
 
 
-        //validate that the solution found isnt inconsistent with the clues
-        //private bool ValidateSolution()
+        //Note: Explicitly need to check CancellationPending
+        private void BwSolver_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Solver solver = new Solver(ulbRows.ListBox.Items.Cast<string>().ToList(), ulbCols.ListBox.Items.Cast<string>().ToList());
+            if (solver.Solve(bwSolver))
+            {
+                e.Result = solver.GetSolvedPuzzle();
+            }
+            else if (bwSolver.CancellationPending) { e.Result = -2; }
+            else { e.Result = -1; }
+        }
+
+        private void BwSolver_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if(e.Result == null || e.Result.Equals(-1))
+            {
+                pgf.WorkerFinished = true;
+                pgf.Close();
+                MessageBox.Show("Puzzle is unsolvable.", "Invalid Puzzle", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (e.Cancelled || e.Result.Equals(-2))
+            {
+                pgf.WorkerFinished = true;
+                pgf.Close();
+            }
+            else if(!e.Cancelled && e.Error == null)
+            {
+                pgf.WorkerFinished = true;
+                pgf.Close();
+                new DisplayNonogramForm(this, (bool[,])e.Result).Show();
+                Hide();
+            }
+            
+        }
     }
+
+    
 }

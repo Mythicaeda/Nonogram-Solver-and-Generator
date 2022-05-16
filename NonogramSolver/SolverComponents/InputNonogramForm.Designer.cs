@@ -29,15 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InputNonogramForm));
             this.btnUpload = new System.Windows.Forms.Button();
             this.tTips = new System.Windows.Forms.ToolTip(this.components);
             this.btnBack = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.openNonDialog = new System.Windows.Forms.OpenFileDialog();
             this.ulbCols = new NonogramSolverGenerator.SolverComponents.UserUpdatableListBox();
             this.ulbRows = new NonogramSolverGenerator.SolverComponents.UserUpdatableListBox();
+            this.openNonDialog = new System.Windows.Forms.OpenFileDialog();
+            this.bwSolver = new System.ComponentModel.BackgroundWorker();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -51,7 +53,7 @@
             this.btnUpload.Text = "Upload";
             this.tTips.SetToolTip(this.btnUpload, "Upload a preexisting .NONOGRAM file");
             this.btnUpload.UseVisualStyleBackColor = true;
-            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
+            this.btnUpload.Click += new System.EventHandler(this.BtnUpload_Click);
             // 
             // btnBack
             // 
@@ -76,7 +78,7 @@
             this.btnNext.Text = "Solve!";
             this.tTips.SetToolTip(this.btnNext, "Return to Main Page");
             this.btnNext.UseVisualStyleBackColor = true;
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            this.btnNext.Click += new System.EventHandler(this.BtnNext_Click);
             // 
             // panel2
             // 
@@ -140,6 +142,12 @@
             this.ulbRows.TabIndex = 8;
             this.ulbRows.Text = "Rows:";
             // 
+            // bwSolver
+            // 
+            this.bwSolver.WorkerSupportsCancellation = true;
+            this.bwSolver.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BwSolver_DoWork);
+            this.bwSolver.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BwSolver_RunWorkerCompleted);
+            // 
             // InputNonogramForm
             // 
             this.AllowDrop = true;
@@ -151,6 +159,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Font = new System.Drawing.Font("Book Antiqua", 18F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.Name = "InputNonogramForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -174,5 +183,6 @@
         private SolverComponents.UserUpdatableListBox ulbCols;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.OpenFileDialog openNonDialog;
+        private System.ComponentModel.BackgroundWorker bwSolver;
     }
 }
