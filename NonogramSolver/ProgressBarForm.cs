@@ -1,28 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace NonogramSolverGenerator
 {
     public partial class ProgressBarForm : Form
     {
-        //private Form parent; 
-        public ProgressBarForm()//Form parent)
+        private BackgroundWorker worker;
+        public bool WorkerFinished { get; set; }
+
+        public ProgressBarForm(BackgroundWorker bgw, string title)
         {
             InitializeComponent();
             progressBar1.Style = ProgressBarStyle.Marquee;
-            //this.parent = parent;
+            worker = bgw;
+            WorkerFinished = false;
+            Text = title;
         }
 
         private void ProgressBarForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //parent.Show();
+            if (!WorkerFinished)
+            {
+                worker.CancelAsync();
+            }
         }
 
         //public Progress

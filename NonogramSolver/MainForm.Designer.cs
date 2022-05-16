@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.linkAbout = new System.Windows.Forms.LinkLabel();
             this.lblGenerate = new System.Windows.Forms.Label();
             this.lblSolve = new System.Windows.Forms.Label();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.pbGenerator = new System.Windows.Forms.PictureBox();
             this.pbSolving = new System.Windows.Forms.PictureBox();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbGenerator)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbSolving)).BeginInit();
@@ -89,10 +90,6 @@
             this.lblSolve.Text = "Solve a Nonogram!";
             this.lblSolve.Click += new System.EventHandler(this.pbSolving_Click);
             // 
-            // openFileDialog
-            // 
-            this.openFileDialog.FileName = "openFileDialog";
-            // 
             // pbGenerator
             // 
             this.pbGenerator.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
@@ -117,12 +114,17 @@
             this.pbSolving.TabStop = false;
             this.pbSolving.Click += new System.EventHandler(this.pbSolving_Click);
             // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Nonogram Solver";

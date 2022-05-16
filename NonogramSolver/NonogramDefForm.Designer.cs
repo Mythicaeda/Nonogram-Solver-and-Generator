@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NonogramDefForm));
             this.rtbDef = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
@@ -59,6 +60,7 @@
             this.ClientSize = new System.Drawing.Size(484, 361);
             this.Controls.Add(this.rtbDef);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NonogramDefForm";
