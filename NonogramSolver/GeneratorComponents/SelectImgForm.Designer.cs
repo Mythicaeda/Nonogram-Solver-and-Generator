@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectImgForm));
             this.openImgDialog = new System.Windows.Forms.OpenFileDialog();
             this.btnLoadImg = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
@@ -107,7 +108,8 @@
             // 
             this.bgwGenerator.WorkerReportsProgress = true;
             this.bgwGenerator.WorkerSupportsCancellation = true;
-            this.bgwGenerator.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwGenerator_DoWork);
+            this.bgwGenerator.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BgwGenerator_DoWork);
+            this.bgwGenerator.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BgwGenerator_RunWorkerCompleted);
             // 
             // SelectImgForm
             // 
@@ -123,6 +125,7 @@
             this.Controls.Add(this.btnLoadImg);
             this.Controls.Add(this.pbUploaded);
             this.Font = new System.Drawing.Font("Book Antiqua", 18F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.Name = "SelectImgForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

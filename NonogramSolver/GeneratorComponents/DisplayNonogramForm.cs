@@ -166,7 +166,7 @@ namespace NonogramSolverGenerator
             Close();
         }
 
-        private void puzzlePanel_Paint(object sender, PaintEventArgs e)
+        private void PuzzlePanel_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.TranslateTransform(puzzlePanel.AutoScrollPosition.X, puzzlePanel.AutoScrollPosition.Y);
             Graphics gfx = e.Graphics;
@@ -291,7 +291,7 @@ namespace NonogramSolverGenerator
             }
         }
 
-        private void puzzlePanel_MouseDown(object sender, MouseEventArgs e)
+        private void PuzzlePanel_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Middle)
             {
@@ -300,7 +300,7 @@ namespace NonogramSolverGenerator
             }
         }
 
-        private void puzzlePanel_MouseMove(object sender, MouseEventArgs e)
+        private void PuzzlePanel_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Middle)
             {
@@ -348,9 +348,6 @@ namespace NonogramSolverGenerator
             }
         }
 
-        private void puzzlePanel_MouseUp(object sender, MouseEventArgs e)
-        {
-            Cursor = Cursors.Default;
-        }
+        private void PuzzlePanel_MouseUp(object sender, MouseEventArgs e) => Cursor = Cursors.Default;
     }
 }

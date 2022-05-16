@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DisplayNonogramForm));
             this.sfd = new System.Windows.Forms.SaveFileDialog();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tips = new System.Windows.Forms.ToolTip(this.components);
@@ -94,10 +95,10 @@
             this.puzzlePanel.Name = "puzzlePanel";
             this.puzzlePanel.Size = new System.Drawing.Size(800, 791);
             this.puzzlePanel.TabIndex = 23;
-            this.puzzlePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.puzzlePanel_Paint);
-            this.puzzlePanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.puzzlePanel_MouseDown);
-            this.puzzlePanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.puzzlePanel_MouseMove);
-            this.puzzlePanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.puzzlePanel_MouseUp);
+            this.puzzlePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.PuzzlePanel_Paint);
+            this.puzzlePanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PuzzlePanel_MouseDown);
+            this.puzzlePanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PuzzlePanel_MouseMove);
+            this.puzzlePanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PuzzlePanel_MouseUp);
             // 
             // pnlCorner
             // 
@@ -149,6 +150,7 @@
             this.Controls.Add(this.btnPanel);
             this.Controls.Add(this.puzzlePanel);
             this.Font = new System.Drawing.Font("Book Antiqua", 18F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.Name = "DisplayNonogramForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
